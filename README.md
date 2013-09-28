@@ -8,7 +8,7 @@ Logging is used to keep an history of events or to debug an application.
 
 A log message defines what's being done or what happened.
 
-It contains of a:
+It consists a:
 
 * __level__: error, warning, information or debug
 * __title__: title of the message
@@ -21,14 +21,14 @@ It contains of a:
 
 ## Log
 
-The log object offers an easy interface to log messages.
+The log object is the facade to the library which offers an easy interface to log messages.
 It uses the observer pattern to dispatch those logged messages to the listeners of the log.
 
 ## LogListener
 
 A log listener performs the actual logging of the message.
 The most common thing to do is write a log message to a file.
-n implementation to do just that has been provided.
+An implementation to do just that has been provided.
 
 ## Code Sample
 
@@ -36,24 +36,20 @@ Check this code sample to see the possibilities of this library:
 
     <?php
     
+    use pallo\library\decorator\LogMessageDecorator;
     use pallo\library\log\listener\FileLogListener;
     use pallo\library\log\Log;
-    use pallo\library\String;
-    
-    // generate a request string
-    $string = new String();
-    $id = $string->generate();
     
     // obtain the client
     $client = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : 'unknown';
 
-    // create a listener    
+    // create a listener
     $listener = new FileLogListener('/path/to/log.file'); // make sure it's writable
     $listener->setFileTruncateSize(512); // in kilobytes
+    $listener->setLogMessageDecorator(new LogMessageDecorator()); // formats the log messages
     
     // create the log object
     $log = new Log();
-    $log->setId($id);
     $log->setClient($client);
     $log->addLogListener($listener);
     

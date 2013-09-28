@@ -3,6 +3,7 @@
 namespace pallo\library\log;
 
 use pallo\library\log\listener\LogListener;
+use pallo\library\String;
 use pallo\library\Timer;
 
 use \Exception;
@@ -38,15 +39,15 @@ class Log {
 
     /**
      * Constructs a new instance
-     * @param pallo\library\Timer $timer Timer of the application run
      * @param string $id Id of the application run
      * @param string $client Id of the application client
+     * @param pallo\library\Timer $timer Timer of the application run
      * @return null
      */
-    public function __construct(Timer $timer = null, $id = null, $client = null) {
-    	if (!$timer) {
-    		$timer = new Timer();
-    	}
+    public function __construct($id = null, $client = null, Timer $timer = null) {
+        if (!$timer) {
+            $timer = new Timer();
+        }
 
         $this->timer = $timer;
         $this->id = $id;
@@ -69,7 +70,7 @@ class Log {
      * @return null
      */
     public function setId($id) {
-    	$this->id = $id;
+        $this->id = $id;
     }
 
     /**
@@ -77,6 +78,10 @@ class Log {
      * @return string
      */
     public function getId() {
+        if (!$this->id) {
+            $this->id = String::generate();
+        }
+
         return $this->id;
     }
 
@@ -86,7 +91,7 @@ class Log {
      * @return null
      */
     public function setClient($client) {
-    	$this->client = $client;
+        $this->client = $client;
     }
 
     /**
@@ -124,7 +129,7 @@ class Log {
      * @return array
      */
     public function getLogListeners() {
-    	return $this->listeners;
+        return $this->listeners;
     }
 
     /**
@@ -212,7 +217,7 @@ class Log {
      * @return null
      */
     public function logMessage(LogMessage $message) {
-        $message->setId($this->id);
+        $message->setId($this->getId());
         $message->setClient($this->client);
         $message->setMicrotime($this->getTime());
 

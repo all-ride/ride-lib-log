@@ -3,6 +3,7 @@
 namespace pallo\library\log\listener;
 
 use pallo\library\decorator\Decorator;
+use pallo\library\decorator\LogMessageDecorator;
 use pallo\library\log\LogMessage;
 
 /**
@@ -10,51 +11,17 @@ use pallo\library\log\LogMessage;
  */
 abstract class AbstractLogListener implements LogListener {
 
-	/**
-	 * Separator between the fields
-	 * @var string
-	 */
-	const FIELD_SEPARATOR = ' - ';
-
-	/**
-	 * Array with the level translated in human readable form
-	 * @var array
-	 */
-	protected $levels;
-
-	/**
-	 * Maximum level to log
-	 * @var integer
-	 */
-	protected $level;
-
-	/**
-	 * Decorator for the date value
-	 * @var pallo\library\decorator\Decorator
-	 */
-	protected $dateDecorator;
-
-	/**
-	 * Decorator for the memory value
-	 * @var pallo\library\decorator\Decorator
-	 */
-	protected $memoryDecorator;
+    /**
+     * Maximum level to log
+     * @var integer
+     */
+    protected $level;
 
     /**
-     * Construct a new file log listener
-     * @param string $fileName Path of the log file
-     * @return null
+     * Decorator for log messages
+     * @var pallo\library\decorato\Decorator
      */
-    public function __construct() {
-        $this->levels = array(
-            LogMessage::LEVEL_ERROR => 'E',
-            LogMessage::LEVEL_WARNING => 'W',
-            LogMessage::LEVEL_INFORMATION => 'I',
-            LogMessage::LEVEL_DEBUG => 'D',
-        );
-
-        $this->level = 0;
-    }
+    protected $logMessageDecorator;
 
     /**
      * Sets the log level
@@ -75,45 +42,47 @@ abstract class AbstractLogListener implements LogListener {
     }
 
     /**
-     * Sets the decorator for the date value
-     * @param pallo\library\decorator\Decorator $dateDecorator
+     * Sets the decorator for the log messages
+     * @param Decorator $logMessageDecorator
      * @return null
      */
-    public function setDateDecorator(Decorator $dateDecorator) {
-    	$this->dateDecorator = $dateDecorator;
-    }
-
-  	/**
-   	 * Gets the decorator for the date value
-   	 * @return pallo\library\decorator\Decorator
-   	 */
-    public function getDateDecorator() {
-    	return $this->dateDecorator;
+    public function setLogMessageDecorator(Decorator $logMessageDecorator) {
+        $this->logMessageDecorator = $logMessageDecorator;
     }
 
     /**
-     * Sets the decorator for the memory value
-     * @param pallo\library\decorator\Decorator $memoryDecorator
+     * Gets the decorator for the log messages
+     * @return Decorator
+     */
+    public function getLogMessageDecorator() {
+        if (!$this->logMessageDecorator) {
+            $this->logMessageDecorator = new LogMessageDecorator();
+        }
+
+        return $this->logMessageDecorator;
+    }
+
+    /**
+     * Logs a message to this listener
+     * @param pallo\library\log\LogMessage $message
      * @return null
      */
-    public function setMemoryDecorator(Decorator $memoryDecorator) {
-    	$this->memoryDecorator = $memoryDecorator;
+    public function logMessage(LogMessage $message) {
+        if (!$this->isLoggable($message)) {
+            return;
+        }
+
+        $this->log($message);
     }
 
     /**
-     * Gets the decorator for the memory value
-     * @return pallo\library\decorator\Decorator
-     */
-    public function getMemoryDecorator() {
-    	return $this->memoryDecorator;
-    }
-
-    /**
-     * Checks if the provided level should be logged
-     * @param integer $level Level to check
+     * Checks if the log message should be logged
+     * @param pallo\library\log\LogMessage $message
      * @return boolean True to log, false otherwise
      */
-    protected function isLoggable($level) {
+    protected function isLoggable(LogMessage $message) {
+        $level = $message->getLevel();
+
         if (!$this->level || $this->level & $level) {
             return true;
         }
@@ -122,37 +91,19 @@ abstract class AbstractLogListener implements LogListener {
     }
 
     /**
+     * Performs the actual logging
+     * @param pallo\library\log\LogMessage $message
+     * @return null
+     */
+    abstract protected function log(LogMessage $message);
+
+    /**
      * Get the output string of a log item
      * @param pallo\library\log\LogMessage $message
      * @return string
      */
     protected function getLogMessageAsString(LogMessage $message) {
-    	$date = $message->getDate();
-    	if ($this->dateDecorator) {
-    		$date = $this->dateDecorator->decorate($date);
-    	}
-
-    	$memory = memory_get_usage();
-    	if ($this->memoryDecorator) {
-    		$memory = $this->memoryDecorator->decorate($memory);
-    	}
-
-        $output = $message->getId();
-        $output .= self::FIELD_SEPARATOR . $date;
-        $output .= self::FIELD_SEPARATOR . substr($message->getMicroTime(), 0, 5);
-        $output .= self::FIELD_SEPARATOR . $message->getClient();
-        $output .= self::FIELD_SEPARATOR . str_pad($message->getSource(), 8);
-        $output .= self::FIELD_SEPARATOR . str_pad($memory, 9, ' ', STR_PAD_LEFT);
-        $output .= self::FIELD_SEPARATOR . $this->levels[$message->getLevel()];
-        $output .= self::FIELD_SEPARATOR . $message->getTitle();
-
-        $description = $message->getDescription();
-        if (!empty($description)) {
-            $output .= self::FIELD_SEPARATOR . $description;
-        }
-        $output .= "\n";
-
-        return $output;
+        return $this->getLogMessageDecorator()->decorate($message);
     }
 
 }

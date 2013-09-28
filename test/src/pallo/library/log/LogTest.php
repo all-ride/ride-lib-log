@@ -10,27 +10,35 @@ use \PHPUnit_Framework_TestCase;
 
 class LogTest extends PHPUnit_Framework_TestCase {
 
-	protected $log;
+    protected $log;
 
     protected function setUp() {
         $this->log = new Log();
     }
 
     public function testConstruct() {
-    	$timer = new Timer();
-    	$id = 'id';
-    	$client = 'client';
+        $id = 'id';
+        $client = 'client';
+        $timer = new Timer();
 
-    	$log = new Log($timer, $id, $client);
+        $log = new Log($id, $client, $timer);
 
-    	$this->assertEquals($id, $log->getId());
-    	$this->assertEquals($client, $log->getClient());
+        $this->assertEquals($id, $log->getId());
+        $this->assertEquals($client, $log->getClient());
+    }
+
+    public function testGetIdGeneratesStringWhenNotSet() {
+        $log = new Log();
+
+        $id = $log->getId();
+
+        $this->assertNotEmpty($id);
     }
 
     public function testGetTime() {
-    	time_nanosleep(0, 300000000);
-    	$result = $this->log->getTime();
-    	$this->assertTrue(0.300 <= $result && $result <= 0.302);
+        time_nanosleep(0, 300000000);
+        $result = $this->log->getTime();
+        $this->assertTrue(0.300 <= $result && $result <= 0.302);
     }
 
     public function testAddLogListener() {
@@ -158,7 +166,7 @@ class TestLogListener implements LogListener {
     public $message;
 
     public function logMessage(LogMessage $message) {
-    	$this->message = $message;
+        $this->message = $message;
     }
 
 }

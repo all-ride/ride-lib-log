@@ -108,6 +108,12 @@ class LogMessage {
      * @throws Exception when the provided id is not a string
      */
     public function setId($id) {
+        if ($id === null) {
+            $this->id = null;
+
+            return;
+        }
+
         if (!is_scalar($id) || (is_object($id) && !method_exists($id, '__toString'))) {
             throw new LogException('Could not set the log message id: invalid id provided');
         }
@@ -128,7 +134,7 @@ class LogMessage {
      * @return integer
      */
     public function getDate() {
-    	return $this->date;
+        return $this->date;
     }
 
     /**
@@ -137,7 +143,7 @@ class LogMessage {
      * @return null
      */
     public function setMicrotime($microtime) {
-    	$this->microtime = $microtime;
+        $this->microtime = $microtime;
     }
 
     /**
@@ -145,7 +151,7 @@ class LogMessage {
      * @return double
      */
     public function getMicrotime() {
-    	return $this->microtime;
+        return $this->microtime;
     }
 
     /**
@@ -215,8 +221,8 @@ class LogMessage {
      * @throws Exception when the provided title is not castable to string
      */
     public function setTitle($title) {
-        if (!is_scalar($title) || (is_object($title) && !method_exists($title, '__toString'))) {
-			throw new LogException('Could not set the log message title: invalid title provided (' . gettype($title) . ')');
+        if ($title === null || !is_scalar($title) || (is_object($title) && !method_exists($title, '__toString'))) {
+            throw new LogException('Could not set the log message title: invalid title provided (' . gettype($title) . ')');
         }
 
         $this->title = (string) $title;
@@ -236,17 +242,21 @@ class LogMessage {
      * @return null
      */
     public function setDescription($description) {
-    	if ($description === null) {
-    		$this->description = null;
+        if ($description === null) {
+            $this->description = null;
 
-    		return;
-    	}
+            return;
+        }
 
-        if (!is_scalar($description) || (is_object($description) && !method_exists($description, '__toString'))) {
-       		throw new LogException('Could not set the log message description: invalid description provided (' . gettype($description) . ')');
-    	}
+        if (is_object($description) && method_exists($description, '__toString')) {
+            $description = (string) $description;
+        }
 
-    	$this->description = (string) $description;
+        if (!is_scalar($description) || is_array($description)) {
+               throw new LogException('Could not set the log message description: invalid description provided (' . gettype($description) . ')');
+        }
+
+        $this->description = (string) $description;
     }
 
     /**
@@ -263,7 +273,7 @@ class LogMessage {
      * @return null
      */
     public function setSource($source) {
-    	$this->source = $source;
+        $this->source = $source;
     }
 
     /**
@@ -271,7 +281,7 @@ class LogMessage {
      * @return string
      */
     public function getSource() {
-    	return $this->source;
+        return $this->source;
     }
 
     /**

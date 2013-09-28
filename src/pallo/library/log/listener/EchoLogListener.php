@@ -10,15 +10,11 @@ use pallo\library\log\LogMessage;
 class EchoLogListener extends AbstractLogListener {
 
     /**
-     * Echos a log item
-     * @param pallo\library\log\LogItem $item Item to echo
+     * Performs the actual logging
+     * @param pallo\library\log\LogMessage $message
      * @return null
      */
-    public function logMessage(LogMessage $message) {
-        if (!$this->isLoggable($message->getLevel())) {
-            return;
-        }
-
+    protected function log(LogMessage $message) {
         echo $this->getLogMessageAsString($message);
     }
 
