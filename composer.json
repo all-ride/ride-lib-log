@@ -1,6 +1,6 @@
 {
-    "name": "pallo/lib-log",
-    "description": "Log library of the Pallo framework",
+    "name": "ride/lib-log",
+    "description": "Log library of the Ride framework",
     "license": "MIT",
     "version": "0.2.1",
     "authors": [
@@ -10,12 +10,12 @@
         }
     ],
     "require": {
-        "pallo/lib-common": ">=0.3.0"
+        "ride/lib-common": ">=0.3.0"
     },
     "autoload": {
         "psr-0": {
-            "pallo\\library\\decorator\\": ["src/", "test/src/"],
-            "pallo\\library\\log\\": ["src/", "test/src/"]
+            "ride\\library\\decorator\\": ["src/", "test/src/"],
+            "ride\\library\\log\\": ["src/", "test/src/"]
         }
     }
 }

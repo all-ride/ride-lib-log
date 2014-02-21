@@ -1,8 +1,8 @@
 <?php
 
-namespace pallo\library\decorator;
+namespace ride\library\decorator;
 
-use pallo\library\log\LogMessage;
+use ride\library\log\LogMessage;
 
 /**
  * Decorator for log messages into output format
@@ -28,19 +28,19 @@ class LogMessageDecorator implements Decorator {
 
     /**
      * Decorator for the date value
-     * @var pallo\library\decorator\Decorator
+     * @var ride\library\decorator\Decorator
      */
     protected $dateDecorator;
 
     /**
      * Decorator for the memory value
-     * @var pallo\library\decorator\Decorator
+     * @var ride\library\decorator\Decorator
      */
     protected $memoryDecorator;
 
     /**
      * Sets the decorator for the date value
-     * @param pallo\library\decorator\Decorator $dateDecorator
+     * @param ride\library\decorator\Decorator $dateDecorator
      * @return null
      */
     public function setDateDecorator(Decorator $dateDecorator) {
@@ -49,7 +49,7 @@ class LogMessageDecorator implements Decorator {
 
     /**
      * Gets the decorator for the date value
-     * @return pallo\library\decorator\Decorator
+     * @return ride\library\decorator\Decorator
      */
     public function getDateDecorator() {
         return $this->dateDecorator;
@@ -57,7 +57,7 @@ class LogMessageDecorator implements Decorator {
 
     /**
      * Sets the decorator for the memory value
-     * @param pallo\library\decorator\Decorator $memoryDecorator
+     * @param ride\library\decorator\Decorator $memoryDecorator
      * @return null
      */
     public function setMemoryDecorator(Decorator $memoryDecorator) {
@@ -66,7 +66,7 @@ class LogMessageDecorator implements Decorator {
 
     /**
      * Gets the decorator for the memory value
-     * @return pallo\library\decorator\Decorator
+     * @return ride\library\decorator\Decorator
      */
     public function getMemoryDecorator() {
         return $this->memoryDecorator;

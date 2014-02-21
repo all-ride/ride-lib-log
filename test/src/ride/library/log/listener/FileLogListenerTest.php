@@ -1,8 +1,8 @@
 <?php
 
-namespace pallo\library\log\listener;
+namespace ride\library\log\listener;
 
-use pallo\library\log\LogMessage;
+use ride\library\log\LogMessage;
 
 use \PHPUnit_Framework_TestCase;
 
@@ -14,7 +14,7 @@ class FileLogListenerTest extends PHPUnit_Framework_TestCase {
     protected $file;
 
     /**
-     * @var pallo\library\log\listener\FileLogListener
+     * @var ride\library\log\listener\FileLogListener
      */
     protected $listener;
 
@@ -31,7 +31,7 @@ class FileLogListenerTest extends PHPUnit_Framework_TestCase {
 
     /**
      * @dataProvider providerConstructThrowsExceptionWhenInvalidArgumentProvided
-     * @expectedException pallo\library\log\exception\LogException
+     * @expectedException ride\library\log\exception\LogException
      */
     public function testConstructThrowsExceptionWhenInvalidArgumentProvided($file, $truncateSize) {
         $listener = new FileLogListener($file);

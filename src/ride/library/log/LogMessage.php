@@ -1,8 +1,8 @@
 <?php
 
-namespace pallo\library\log;
+namespace ride\library\log;
 
-use pallo\library\log\exception\LogException;
+use ride\library\log\exception\LogException;
 
 /**
  * Data container of a log item

@@ -1,6 +1,6 @@
-# Pallo: Log Library
+# Ride: Log Library
 
-Log library of the PHP Pallo framework.
+Log library of the PHP Ride framework.
 
 Logging is used to keep an history of events or to debug an application.
 
@@ -36,9 +36,9 @@ Check this code sample to see the possibilities of this library:
 
     <?php
     
-    use pallo\library\decorator\LogMessageDecorator;
-    use pallo\library\log\listener\FileLogListener;
-    use pallo\library\log\Log;
+    use ride\library\decorator\LogMessageDecorator;
+    use ride\library\log\listener\FileLogListener;
+    use ride\library\log\Log;
     
     // obtain the client
     $client = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : 'unknown';

@@ -1,9 +1,9 @@
 <?php
 
-namespace pallo\library\log;
+namespace ride\library\log;
 
-use pallo\library\log\listener\LogListener;
-use pallo\library\Timer;
+use ride\library\log\listener\LogListener;
+use ride\library\Timer;
 
 use \Exception;
 use \PHPUnit_Framework_TestCase;
