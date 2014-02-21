@@ -1,8 +1,8 @@
 <?php
 
-namespace pallo\library\log;
+namespace ride\library\log;
 
-use pallo\library\String;
+use ride\library\String;
 
 use \PHPUnit_Framework_TestCase;
 
@@ -27,7 +27,7 @@ class LogMessageTest extends PHPUnit_Framework_TestCase {
 
     /**
      * @dataProvider providerConstructWithInvalidParametersThrowsException
-     * @expectedException pallo\library\log\exception\LogException
+     * @expectedException ride\library\log\exception\LogException
      */
     public function testConstructWithInvalidParametersThrowsException($level, $title, $description, $source, $id) {
         $logMessage = new LogMessage($level, $title, $description, $source);
@@ -65,7 +65,7 @@ class LogMessageTest extends PHPUnit_Framework_TestCase {
 
     /**
      * @dataProvider providerSetIdThrowsExceptionWhenInvalidValueProvided
-     * @expectedException pallo\library\log\exception\LogException
+     * @expectedException ride\library\log\exception\LogException
      */
     public function testSetIdThrowsExceptionWhenInvalidValueProvided($id) {
         $logMessage = new LogMessage(LogMessage::LEVEL_DEBUG, 'title');

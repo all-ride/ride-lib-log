@@ -1,9 +1,9 @@
 <?php
 
-namespace pallo\library\log\listener;
+namespace ride\library\log\listener;
 
-use pallo\library\decorator\Decorator;
-use pallo\library\log\LogMessage;
+use ride\library\decorator\Decorator;
+use ride\library\log\LogMessage;
 
 use \PHPUnit_Framework_TestCase;
 

@@ -1,10 +1,10 @@
 <?php
 
-namespace pallo\library\decorator;
+namespace ride\library\decorator;
 
-use pallo\library\decorator\DateFormatDecorator;
-use pallo\library\decorator\StorageSizeDecorator;
-use pallo\library\log\LogMessage;
+use ride\library\decorator\DateFormatDecorator;
+use ride\library\decorator\StorageSizeDecorator;
+use ride\library\log\LogMessage;
 
 use \PHPUnit_Framework_TestCase;
 

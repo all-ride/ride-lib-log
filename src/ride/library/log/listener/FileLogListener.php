@@ -1,9 +1,9 @@
 <?php
 
-namespace pallo\library\log\listener;
+namespace ride\library\log\listener;
 
-use pallo\library\log\exception\LogException;
-use pallo\library\log\LogMessage;
+use ride\library\log\exception\LogException;
+use ride\library\log\LogMessage;
 
 /**
  * Log listener to write log messages to file
@@ -32,7 +32,7 @@ class FileLogListener extends AbstractLogListener {
      * Construct a new file log listener
      * @param string $fileName Path of the log file
      * @return null
-     * @throws pallo\library\log\exception\LogException when the provided file
+     * @throws ride\library\log\exception\LogException when the provided file
      * name is empty or invalid
      */
     public function __construct($fileName) {
@@ -48,7 +48,7 @@ class FileLogListener extends AbstractLogListener {
      * Set the limit in kb before the log file gets truncated
      * @param integer $size Limit in kilobytes
      * @return null
-     * @throws pallo\library\log\exception\LogException when the size is not a
+     * @throws ride\library\log\exception\LogException when the size is not a
      * positive number
      */
     public function setFileTruncateSize($size) {
@@ -69,7 +69,7 @@ class FileLogListener extends AbstractLogListener {
 
     /**
      * Performs the actual logging
-     * @param pallo\library\log\LogMessage $message
+     * @param ride\library\log\LogMessage $message
      * @return null
      */
     protected function log(LogMessage $message) {
