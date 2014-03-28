@@ -19,7 +19,7 @@ abstract class AbstractLogListener implements LogListener {
 
     /**
      * Decorator for log messages
-     * @var ride\library\decorato\Decorator
+     * @var \ride\library\decorator\Decorator
      */
     protected $logMessageDecorator;
 
@@ -64,7 +64,7 @@ abstract class AbstractLogListener implements LogListener {
 
     /**
      * Logs a message to this listener
-     * @param ride\library\log\LogMessage $message
+     * @param \ride\library\log\LogMessage $message
      * @return null
      */
     public function logMessage(LogMessage $message) {
@@ -77,7 +77,7 @@ abstract class AbstractLogListener implements LogListener {
 
     /**
      * Checks if the log message should be logged
-     * @param ride\library\log\LogMessage $message
+     * @param \ride\library\log\LogMessage $message
      * @return boolean True to log, false otherwise
      */
     protected function isLoggable(LogMessage $message) {
@@ -92,14 +92,14 @@ abstract class AbstractLogListener implements LogListener {
 
     /**
      * Performs the actual logging
-     * @param ride\library\log\LogMessage $message
+     * @param \ride\library\log\LogMessage $message
      * @return null
      */
     abstract protected function log(LogMessage $message);
 
     /**
      * Get the output string of a log item
-     * @param ride\library\log\LogMessage $message
+     * @param \ride\library\log\LogMessage $message
      * @return string
      */
     protected function getLogMessageAsString(LogMessage $message) {

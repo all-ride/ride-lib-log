@@ -11,7 +11,7 @@ class EchoLogListener extends AbstractLogListener {
 
     /**
      * Performs the actual logging
-     * @param ride\library\log\LogMessage $message
+     * @param \ride\library\log\LogMessage $message
      * @return null
      */
     protected function log(LogMessage $message) {

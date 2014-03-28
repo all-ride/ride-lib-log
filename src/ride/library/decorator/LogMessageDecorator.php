@@ -28,19 +28,19 @@ class LogMessageDecorator implements Decorator {
 
     /**
      * Decorator for the date value
-     * @var ride\library\decorator\Decorator
+     * @var \ride\library\decorator\Decorator
      */
     protected $dateDecorator;
 
     /**
      * Decorator for the memory value
-     * @var ride\library\decorator\Decorator
+     * @var \ride\library\decorator\Decorator
      */
     protected $memoryDecorator;
 
     /**
      * Sets the decorator for the date value
-     * @param ride\library\decorator\Decorator $dateDecorator
+     * @param \ride\library\decorator\Decorator $dateDecorator
      * @return null
      */
     public function setDateDecorator(Decorator $dateDecorator) {
@@ -49,7 +49,7 @@ class LogMessageDecorator implements Decorator {
 
     /**
      * Gets the decorator for the date value
-     * @return ride\library\decorator\Decorator
+     * @return \ride\library\decorator\Decorator
      */
     public function getDateDecorator() {
         return $this->dateDecorator;
@@ -57,7 +57,7 @@ class LogMessageDecorator implements Decorator {
 
     /**
      * Sets the decorator for the memory value
-     * @param ride\library\decorator\Decorator $memoryDecorator
+     * @param \ride\library\decorator\Decorator $memoryDecorator
      * @return null
      */
     public function setMemoryDecorator(Decorator $memoryDecorator) {
@@ -66,7 +66,7 @@ class LogMessageDecorator implements Decorator {
 
     /**
      * Gets the decorator for the memory value
-     * @return ride\library\decorator\Decorator
+     * @return \ride\library\decorator\Decorator
      */
     public function getMemoryDecorator() {
         return $this->memoryDecorator;
