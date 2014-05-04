@@ -2,11 +2,13 @@
 
 namespace ride\library\log;
 
-use ride\library\String;
-
 use \PHPUnit_Framework_TestCase;
 
 class LogMessageTest extends PHPUnit_Framework_TestCase {
+
+    public function __toString() {
+        return get_class($this);
+    }
 
     public function testConstruct() {
         $level = LogMessage::LEVEL_INFORMATION;
@@ -40,24 +42,25 @@ class LogMessageTest extends PHPUnit_Framework_TestCase {
             array('test', 'test', null, null, null),
             array(1, null, null, null, null),
             array(1, 'title', array(), null, null),
-            array(1, 'title', $this, null, null),
+            array(1, 'title', new \StdClass(), null, null),
         );
     }
 
     public function testSetDescriptionWithObject() {
-        $description = 'description';
-        $logMessage = new LogMessage(LogMessage::LEVEL_DEBUG, 'title', new String($description));
-        $this->assertEquals($description, $logMessage->getDescription());
+        $expected = (string) $this;
+
+        $logMessage = new LogMessage(LogMessage::LEVEL_DEBUG, 'title', $this);
+        $this->assertEquals($expected, $logMessage->getDescription());
     }
 
     public function testSetId() {
+        $id = 'id';
+
         $logMessage = new LogMessage(LogMessage::LEVEL_DEBUG, 'title');
         $this->assertNull($logMessage->getId());
 
         $logMessage->setId(null);
         $this->assertNull($logMessage->getId());
-
-        $id = 'id';
 
         $logMessage->setId($id);
         $this->assertEquals($id, $logMessage->getId());
@@ -75,7 +78,7 @@ class LogMessageTest extends PHPUnit_Framework_TestCase {
     public function providerSetIdThrowsExceptionWhenInvalidValueProvided() {
         return array(
         	array(array()),
-        	array($this),
+        	array(new \StdClass()),
         );
     }
 
