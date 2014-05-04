@@ -15,7 +15,7 @@ class Log {
 
     /**
      * Timer of this Log
-     * @var ride\library\Timer
+     * @var \ride\library\Timer
      */
     protected $timer;
 
@@ -41,7 +41,7 @@ class Log {
      * Constructs a new instance
      * @param string $id Id of the application run
      * @param string $client Id of the application client
-     * @param ride\library\Timer $timer Timer of the application run
+     * @param \ride\library\Timer $timer Timer of the application run
      * @return null
      */
     public function __construct($id = null, $client = null, Timer $timer = null) {
@@ -104,7 +104,7 @@ class Log {
 
     /**
      * Adds a listener
-     * @param ride\library\log\listener\LogListener $listener
+     * @param \ride\library\log\listener\LogListener $listener
      * @return null
      */
     public function addLogListener(LogListener $listener) {
@@ -113,7 +113,7 @@ class Log {
 
     /**
      * Removes a listener
-     * @param ride\library\log\listener\LogListener $listener
+     * @param \ride\library\log\listener\LogListener $listener
      * @return null
      */
     public function removeLogListener(LogListener $listener) {

@@ -11,7 +11,7 @@ interface LogListener {
 
     /**
      * Logs a message to this listener
-     * @param ride\library\log\LogMessage $message
+     * @param \ride\library\log\LogMessage $message
      * @return null
      */
     public function logMessage(LogMessage $message);
