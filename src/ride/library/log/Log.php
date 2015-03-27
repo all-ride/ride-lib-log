@@ -2,6 +2,7 @@
 
 namespace ride\library\log;
 
+use ride\library\log\listener\BrowseableLogListener;
 use ride\library\log\listener\LogListener;
 use ride\library\String;
 use ride\library\Timer;
@@ -20,7 +21,7 @@ class Log {
     protected $timer;
 
     /**
-     * Id of this Log
+     * Id of this log session
      * @var string
      */
     protected $id;
@@ -39,7 +40,7 @@ class Log {
 
     /**
      * Constructs a new instance
-     * @param string $id Id of the application run
+     * @param string $id Id of the log session
      * @param string $client Id of the application client
      * @param \ride\library\Timer $timer Timer of the application run
      * @return null
@@ -65,7 +66,7 @@ class Log {
     }
 
     /**
-     * Sets the id of this log
+     * Sets the id of the log session
      * @param string $id
      * @return null
      */
@@ -74,7 +75,7 @@ class Log {
     }
 
     /**
-     * Gets the id of this log
+     * Gets the id of the log session
      * @return string
      */
     public function getId() {
@@ -224,6 +225,51 @@ class Log {
         foreach ($this->listeners as $listener) {
             $listener->logMessage($message);
         }
+    }
+
+    /**
+     * Gets a log session by id
+     * @param string $id Id of the session
+     * @return \ride\library\log\LogSession
+     */
+    public function getLogSession($id) {
+        foreach ($this->listeners as $listener) {
+            if (!$listener instanceof BrowseableLogListener) {
+                continue;
+            }
+
+            $session = $listener->getLogSession($id);
+            if ($session) {
+                return $session;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Finds log sessions
+     * @param array $options Options for the find
+     * <ul>
+     * <li>limit: number of entries to fetch</li>
+     * <li>page: page number</li>
+     * </li>
+     * @param integer $pages Total number of pages will be set to this variable
+     * @return array Array with LogSession instances
+     */
+    public function getLogSessions(array $options = null, &$pages = null) {
+        foreach ($this->listeners as $listener) {
+            if (!$listener instanceof BrowseableLogListener) {
+                continue;
+            }
+
+            $sessions = $listener->getLogSessions($options, $pages);
+            if ($sessions) {
+                return $sessions;
+            }
+        }
+
+        return array();
     }
 
 }
