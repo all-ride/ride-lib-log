@@ -15,7 +15,7 @@ It consists a:
 * __description__: detailed information about the message
 * __date__: date and time of the event
 * __microtime__: microseconds in the application run 
-* __id__: id of the incoming request
+* __id__: id of the log session
 * __source__: source library or module which logged the message 
 * __client__: Id of the client (eg. an IP address)
 
@@ -59,3 +59,4 @@ Check this code sample to see the possibilities of this library:
     $log->logWarning('Warning message', 'with a description', 'my-module');
     $log->logError('Debug message', 'with a description');
     $log->logException(new Exception('A exception'));
+    

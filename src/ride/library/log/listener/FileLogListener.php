@@ -20,13 +20,19 @@ class FileLogListener extends AbstractLogListener {
      * File name of the log
      * @var string
      */
-    private $fileName;
+    protected $fileName;
 
     /**
      * Maximum file size
      * @var integer
      */
-    private $fileTruncateSize;
+    protected $fileTruncateSize;
+
+    /**
+     * Flag to see if a backup file should be used
+     * @var boolean
+     */
+    protected $useBackupFile;
 
     /**
      * Construct a new file log listener
@@ -42,6 +48,7 @@ class FileLogListener extends AbstractLogListener {
 
         $this->fileName = $fileName;
         $this->fileTruncateSize = self::DEFAULT_TRUNCATE_SIZE;
+        $this->useBackupFile = true;
     }
 
     /**
@@ -65,6 +72,23 @@ class FileLogListener extends AbstractLogListener {
      */
     public function getFileTruncateSize() {
         return $this->fileTruncateSize;
+    }
+
+    /**
+     * Sets the flag to see if a backup file should be used
+     * @param boolean $useBackupFile
+     * @return null
+     */
+    public function setUseBackupFile($useBackupFile) {
+        $this->useBackupFile = $useBackupFile;
+    }
+
+    /**
+     * Gets the flag to see if a backup file should be used
+     * @return boolean
+     */
+    public function useBackupFile($useBackupFile) {
+        return $this->useBackupFile;
     }
 
     /**
@@ -114,6 +138,10 @@ class FileLogListener extends AbstractLogListener {
         $fileSize = filesize($this->fileName) / 1024; // we work with kb
         if ($fileSize < $truncateSize) {
             return;
+        }
+
+        if ($this->useBackupFile) {
+            copy($this->fileName, $this->fileName . '.1');
         }
 
         if ($f = @fopen($this->fileName, 'w')) {

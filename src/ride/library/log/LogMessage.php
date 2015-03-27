@@ -34,7 +34,7 @@ class LogMessage {
     const LEVEL_DEBUG = 8;
 
     /**
-     * Id of the log
+     * Id of the log session
      * @var string
      */
     protected $id;
@@ -127,6 +127,15 @@ class LogMessage {
      */
     public function getId() {
         return $this->id;
+    }
+
+    /**
+     * Sets the timestamp of this log item
+     * @param integer $date Timestamp of this log item
+     * @return null
+     */
+    public function setDate($date) {
+        $this->date = $date;
     }
 
     /**

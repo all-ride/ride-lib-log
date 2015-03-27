@@ -13,7 +13,7 @@ class LogMessageDecorator implements Decorator {
      * Separator between the fields
      * @var string
      */
-    const FIELD_SEPARATOR = ' - ';
+    const FIELD_SEPARATOR = ' ~ ';
 
     /**
      * Array with the level translated in human readable form
