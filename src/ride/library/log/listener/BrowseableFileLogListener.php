@@ -18,7 +18,7 @@ class BrowseableFileLogListener extends FileLogListener implements BrowseableLog
      * @return \ride\library\log\LogSession
      */
     public function getLogSession($id) {
-        $logSessions = $this->getLogSessions();
+        $logSessions = $this->getLogSessions(array('limit' => 9999));
 
         if (!isset($logSessions[$id])) {
             return null;
