@@ -34,29 +34,31 @@ An implementation to do just that has been provided.
 
 Check this code sample to see the possibilities of this library:
 
-    <?php
-    
-    use ride\library\decorator\LogMessageDecorator;
-    use ride\library\log\listener\FileLogListener;
-    use ride\library\log\Log;
-    
-    // obtain the client
-    $client = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : 'unknown';
+```php
+<?php
 
-    // create a listener
-    $listener = new FileLogListener('/path/to/log.file'); // make sure it's writable
-    $listener->setFileTruncateSize(512); // in kilobytes
-    $listener->setLogMessageDecorator(new LogMessageDecorator()); // formats the log messages
-    
-    // create the log object
-    $log = new Log();
-    $log->setClient($client);
-    $log->addLogListener($listener);
-    
-    // do some logging
-    $log->logDebug('Debug message');
-    $log->logInformation('Information message', 'with a description', 'my-module');
-    $log->logWarning('Warning message', 'with a description', 'my-module');
-    $log->logError('Debug message', 'with a description');
-    $log->logException(new Exception('A exception'));
+use ride\library\decorator\LogMessageDecorator;
+use ride\library\log\listener\FileLogListener;
+use ride\library\log\Log;
+
+// obtain the client
+$client = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : 'unknown';
+
+// create a listener
+$listener = new FileLogListener('/path/to/log.file'); // make sure it's writable
+$listener->setFileTruncateSize(512); // in kilobytes
+$listener->setLogMessageDecorator(new LogMessageDecorator()); // formats the log messages
+
+// create the log object
+$log = new Log();
+$log->setClient($client);
+$log->addLogListener($listener);
+
+// do some logging
+$log->logDebug('Debug message');
+$log->logInformation('Information message', 'with a description', 'my-module');
+$log->logWarning('Warning message', 'with a description', 'my-module');
+$log->logError('Debug message', 'with a description');
+$log->logException(new Exception('A exception'));
+```
     
