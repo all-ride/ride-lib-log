@@ -4,7 +4,7 @@ namespace ride\library\log;
 
 use ride\library\log\listener\BrowseableLogListener;
 use ride\library\log\listener\LogListener;
-use ride\library\String;
+use ride\library\StringHelper;
 use ride\library\Timer;
 
 use \Exception;
@@ -80,7 +80,7 @@ class Log {
      */
     public function getId() {
         if (!$this->id) {
-            $this->id = String::generate();
+            $this->id = StringHelper::generate();
         }
 
         return $this->id;
