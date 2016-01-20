@@ -18,6 +18,18 @@ abstract class AbstractLogListener implements LogListener {
     protected $level;
 
     /**
+     * Starts writing the log when this action level has occured
+     * @var integer
+     */
+    protected $actionLevel;
+
+    /**
+     * Buffer for all log messages before the action level is reached
+     * @var array
+     */
+    protected $actionBuffer;
+
+    /**
      * Decorator for log messages
      * @var \ride\library\decorator\Decorator
      */
@@ -39,6 +51,26 @@ abstract class AbstractLogListener implements LogListener {
      */
     public function getLevel() {
         return $this->level;
+    }
+
+    /**
+     * Sets the action log level, starts writing the log when this level has
+     * occured
+     * @param integer $level 0 for all levels, see LogMessage level constants
+     * @return null
+     * @see LogMessage
+     */
+    public function setActionLevel($actionLevel) {
+        $this->actionLevel = $actionLevel;
+        $this->actionBuffer = array();
+    }
+
+    /**
+     * Gets the action log level
+     * @return integer
+     */
+    public function getActionLevel() {
+        return $this->actionLevel;
     }
 
     /**
@@ -72,7 +104,11 @@ abstract class AbstractLogListener implements LogListener {
             return;
         }
 
-        $this->log($message);
+        if ($this->useBuffer($message)) {
+            $this->actionBuffer[] = $message;
+        } else {
+            $this->log($message);
+        }
     }
 
     /**
@@ -88,6 +124,34 @@ abstract class AbstractLogListener implements LogListener {
         }
 
         return false;
+    }
+
+    /**
+     * Checks if the log message should be logged
+     * @param \ride\library\log\LogMessage $message
+     * @return boolean True to log, false otherwise
+     */
+    protected function useBuffer(LogMessage $message) {
+        if (!$this->actionLevel) {
+            return false;
+        }
+
+        $level = $message->getLevel();
+
+        if ($this->actionLevel & $level) {
+            // action level has been reached, log everything in the buffer and
+            // clear the action level
+            foreach ($this->actionBuffer as $logMessage) {
+                $this->log($logMessage);
+            }
+
+            $this->actionLevel = null;
+            $this->actionBuffer = null;
+
+            return false;
+        } else {
+            return true;
+        }
     }
 
     /**
