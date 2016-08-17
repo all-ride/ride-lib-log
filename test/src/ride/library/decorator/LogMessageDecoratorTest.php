@@ -26,7 +26,7 @@ class LogMessageDecoratorTest extends PHPUnit_Framework_TestCase {
 
         $result = $decorator->decorate($message);
 
-        $regex = "/id - ([0-9])* - 0\.123 - client - source   - ([0-9 ])* - I - title - description\\n/";
+        $regex = "/id ~ ([0-9])* ~ 0\.123 ~ client ~ source   ~ ([0-9 ])* ~ I ~ title ~ description\\n/";
         $this->assertRegExp($regex, $result);
     }
 
@@ -45,7 +45,7 @@ class LogMessageDecoratorTest extends PHPUnit_Framework_TestCase {
         $decorator->setMemoryDecorator($memoryDecorator);
         $result = $decorator->decorate($message);
 
-        $regex = "/id - " . date('Y-m-d') . " - 0\.123 - client - source   - ([0-9 .])*Mb - I - title - description\\n/";
+        $regex = "/id ~ " . date('Y-m-d') . " ~ 0\.123 ~ client ~ source   ~ ([0-9 .])*Mb ~ I ~ title ~ description\\n/";
         $this->assertRegExp($regex, $result);
 
         $this->assertEquals($dateDecorator, $decorator->getDateDecorator());
