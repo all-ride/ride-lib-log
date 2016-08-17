@@ -49,7 +49,7 @@ class FileLogListenerTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testLogMessage() {
-        $regex = "/id - ([0-9])* - 0\.123 - client - source   - ([0-9 ])* - I - title - description\\n/";
+        $regex = "/id ~ ([0-9])* ~ 0\.123 ~ client ~ source   ~ ([0-9 ])* ~ I ~ title ~ description\\n/";
 
         $message = new LogMessage(LogMessage::LEVEL_INFORMATION, 'title', 'description', 'source');
         $message->setId('id');

@@ -70,7 +70,7 @@ class LogSession {
             return;
         }
 
-        if (!is_scalar($id) || (is_object($id) && !method_exists($id, '__toString'))) {
+        if (is_bool($id) || !is_scalar($id) || (is_object($id) && !method_exists($id, '__toString'))) {
             throw new LogException('Could not set the log message id: invalid id provided');
         }
 
@@ -91,7 +91,11 @@ class LogSession {
      * @return null
      */
     public function setDate($date) {
-        $this->date = $date;
+        if ($date !== null && !is_numeric($date)) {
+            throw new LogException('Could not set the date of the log message: invalid timestamp provided');
+        }
+
+        $this->date = (integer) $date;
     }
 
     /**
@@ -108,6 +112,10 @@ class LogSession {
      * @return null
      */
     public function setMicrotime($microtime) {
+        if ($microtime !== null && (!is_numeric($microtime) || $microtime < 0)) {
+            throw new LogException('Could not set the microtime of the log message: no timestamp provided');
+        }
+
         $this->microtime = $microtime;
     }
 
@@ -126,7 +134,7 @@ class LogSession {
      * @throws Exception when the provided title is not castable to string
      */
     public function setTitle($title) {
-        if ($title === null || !is_scalar($title) || (is_object($title) && !method_exists($title, '__toString'))) {
+        if ($title !== null && (is_bool($title) || !is_scalar($title) || (is_object($title) && !method_exists($title, '__toString')))) {
             throw new LogException('Could not set the log message title: invalid title provided (' . gettype($title) . ')');
         }
 
@@ -147,6 +155,10 @@ class LogSession {
      * @return null
      */
     public function setClient($client) {
+        if ($client !== null && (is_bool($client) || !is_scalar($client) || (is_object($client) && !method_exists($client, '__toString')))) {
+            throw new LogException('Could not set the log message client: invalid client provided (' . gettype($client) . ')');
+        }
+
         $this->client = $client;
     }
 
@@ -227,7 +239,7 @@ class LogSession {
         $messages = array();
         foreach ($this->messages as $message) {
             foreach ($query as $queryString) {
-                if (strpos($message->getTitle(), $queryString) !== false || strpos($message->getDescription(), $queryString) !== false) {
+                if (stripos($message->getTitle(), $queryString) !== false || stripos($message->getDescription(), $queryString) !== false) {
                     $messages[] = $message;
 
                     break;

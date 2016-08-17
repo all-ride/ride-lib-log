@@ -2,7 +2,9 @@
 
 namespace ride\library\log\listener;
 
+use ride\library\decorator\Decorator;
 use ride\library\decorator\LogMessageDecorator;
+use ride\library\log\exception\LogException;
 use ride\library\log\LogMessage;
 use ride\library\log\LogSession;
 
@@ -11,6 +13,19 @@ use ride\library\log\LogSession;
  * properly, the LogMessageDecorator should be used.
  */
 class BrowseableFileLogListener extends FileLogListener implements BrowseableLogListener {
+
+    /**
+     * Sets the decorator for the log messages
+     * @param Decorator $logMessageDecorator
+     * @return null
+     */
+    public function setLogMessageDecorator(Decorator $logMessageDecorator) {
+        if (!$logMessageDecorator instanceof LogMessageDecorator) {
+            throw new LogException('Could not set log message decorator: this log listener only works with a ' . LogMessageDecorator::class . ' instance');
+        }
+
+        $this->logMessageDecorator = $logMessageDecorator;
+    }
 
     /**
      * Gets a log session by id
@@ -95,7 +110,7 @@ class BrowseableFileLogListener extends FileLogListener implements BrowseableLog
             $logMessage = $this->parseLogLine($line);
             if (!$logMessage) {
                 if ($lastLogMessage) {
-                    $lastLogMessage->setDescription($lastLogMessage->getDescription() . "\n" . $line);
+                    $lastLogMessage->setDescription(trim($lastLogMessage->getDescription() . "\n" . $line));
                 }
 
                 continue;
@@ -146,8 +161,8 @@ class BrowseableFileLogListener extends FileLogListener implements BrowseableLog
 
         $message = new LogMessage($level, $tokens[7], isset($tokens[8]) ? $tokens[8] : null, trim($tokens[4]));
         $message->setId($tokens[0]);
-        $message->setDate($tokens[1]);
-        $message->setMicrotime($tokens[2]);
+        $message->setDate((integer) $tokens[1]);
+        $message->setMicrotime((float) $tokens[2]);
         $message->setClient($tokens[3]);
 
         return $message;
