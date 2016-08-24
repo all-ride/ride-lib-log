@@ -21,7 +21,7 @@ class BrowseableFileLogListener extends FileLogListener implements BrowseableLog
      */
     public function setLogMessageDecorator(Decorator $logMessageDecorator) {
         if (!$logMessageDecorator instanceof LogMessageDecorator) {
-            throw new LogException('Could not set log message decorator: this log listener only works with a ' . LogMessageDecorator::class . ' instance');
+            throw new LogException('Could not set log message decorator: this log listener only works with a ride\\library\\decorator\\LogMessageDecorator instance');
         }
 
         $this->logMessageDecorator = $logMessageDecorator;
