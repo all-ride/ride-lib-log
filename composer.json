@@ -13,8 +13,14 @@
     },
     "autoload": {
         "psr-0": {
-            "ride\\library\\decorator\\": ["src/", "test/src/"],
-            "ride\\library\\log\\": ["src/", "test/src/"]
+            "ride\\library\\decorator\\": ["src/"],
+            "ride\\library\\log\\": ["src/"]
+        }
+    },
+    "autoload-dev": {
+        "psr-0": {
+            "ride\\library\\decorator\\": ["test/src/"],
+            "ride\\library\\log\\": ["test/src/"]
         }
     }
 }

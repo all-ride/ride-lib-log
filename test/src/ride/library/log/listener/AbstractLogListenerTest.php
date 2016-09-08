@@ -11,7 +11,9 @@ class AbstractLogListenerTest extends PHPUnit_Framework_TestCase {
     public function testLogMessage() {
         $message = new LogMessage(LogMessage::LEVEL_INFORMATION, 'title', 'description', 'source');
 
-        $listener = $this->getMock('ride\\library\\log\\listener\\AbstractLogListener', array('log'));
+        $listener = $this->getMockBuilder('ride\\library\\log\\listener\\AbstractLogListener')
+                         ->setMethods(array('log'))
+                         ->getMock();
         $listener->expects($this->once())->method('log')->with($this->equalTo($message));
 
         $listener->logMessage($message);
