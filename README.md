@@ -4,7 +4,9 @@ Log library of the PHP Ride framework.
 
 Logging is used to keep an history of events or to debug an application.
 
-## LogMessage
+## What's In This Library
+
+### LogMessage
 
 A log message defines what's being done or what happened.
 
@@ -19,23 +21,23 @@ It consists a:
 * __source__: source library or module which logged the message 
 * __client__: Id of the client (eg. an IP address)
 
-## LogSession
+### LogSession
 
 A _LogSession_ is a collection of log messages which belong together.
 For example, all logged messages from handling the same HTTP request. 
 
-## Log
+### Log
 
 The log object is the facade to the library which offers an easy interface to log messages.
 It uses the observer pattern to dispatch those logged messages to the listeners of the log.
 
-## LogListener
+### LogListener
 
 A log listener performs the actual logging of the message.
 The most common thing to do is write a log message to a file.
 An implementation to do just that has been provided.
 
-## BrowseableLogListener
+### BrowseableLogListener
 
 The browseable log listener is an extension of the regular log listener.
 It adds functionality to retrieve and inspect log messages back from the log.
@@ -81,3 +83,10 @@ $logMessages = $logSession->getLogMessagesBySource('my-module');
 $logMessages = $logSession->getLogMessagesByQuery('message');
 ```
     
+## Installation
+
+You can use [Composer](http://getcomposer.org) to install this library.
+
+```
+composer require ride/lib-log
+```
