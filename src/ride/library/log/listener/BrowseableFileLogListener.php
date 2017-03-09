@@ -8,6 +8,8 @@ use ride\library\log\exception\LogException;
 use ride\library\log\LogMessage;
 use ride\library\log\LogSession;
 
+use \DateTime;
+
 /**
  * Browseable log listener to write log messages to file. In order to work
  * properly, the LogMessageDecorator should be used.
@@ -25,6 +27,7 @@ class BrowseableFileLogListener extends FileLogListener implements BrowseableLog
         }
 
         $this->logMessageDecorator = $logMessageDecorator;
+        $this->dateFormat = $logMessageDecorator->getDateDecorator()->getDateFormat();
     }
 
     /**
@@ -159,9 +162,11 @@ class BrowseableFileLogListener extends FileLogListener implements BrowseableLog
                 return false;
         }
 
+        $dateTime = DateTime::createFromFormat($this->dateFormat, $tokens[1]);
+
         $message = new LogMessage($level, $tokens[7], isset($tokens[8]) ? $tokens[8] : null, trim($tokens[4]));
         $message->setId($tokens[0]);
-        $message->setDate((integer) $tokens[1]);
+        $message->setDate($dateTime->getTimestamp());
         $message->setMicrotime((float) $tokens[2]);
         $message->setClient($tokens[3]);
 
