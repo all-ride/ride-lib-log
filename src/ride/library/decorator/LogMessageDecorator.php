@@ -96,7 +96,7 @@ class LogMessageDecorator implements Decorator {
         $output .= self::FIELD_SEPARATOR . $date;
         $output .= self::FIELD_SEPARATOR . substr($value->getMicroTime(), 0, 5);
         $output .= self::FIELD_SEPARATOR . $value->getClient();
-        $output .= self::FIELD_SEPARATOR . str_pad($value->getSource(), 8);
+        $output .= self::FIELD_SEPARATOR . (is_string($value->getSource()) ? str_pad($value->getSource(), 8) : '');
         $output .= self::FIELD_SEPARATOR . str_pad($memory, 9, ' ', STR_PAD_LEFT);
         $output .= self::FIELD_SEPARATOR . $this->levels[$value->getLevel()];
         $output .= self::FIELD_SEPARATOR . $value->getTitle();
