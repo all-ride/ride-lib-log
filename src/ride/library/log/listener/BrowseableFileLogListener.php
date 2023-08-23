@@ -15,6 +15,7 @@ use \DateTime;
  * properly, the LogMessageDecorator should be used.
  */
 class BrowseableFileLogListener extends FileLogListener implements BrowseableLogListener {
+    protected $dateFormat;
 
     /**
      * Sets the decorator for the log messages
