@@ -1,3 +1,6 @@
+# [1.2] - 2023-08-23
+### Updated
+- Creation of dynamic properties is deprecated
 # [1.1] - 2023-06-02
 ### Updated
 - Added ReturnTypeWillChange attribute for php 8.1
