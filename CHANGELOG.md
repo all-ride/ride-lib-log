@@ -1,3 +1,6 @@
+# [1.1] - 2023-06-02
+### Updated
+- Added ReturnTypeWillChange attribute for php 8.1
 # [1.0.3] - 2017-03-09
 ## Added
 - changelog
